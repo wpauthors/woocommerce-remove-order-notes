@@ -20,9 +20,16 @@ add_filter( 'woocommerce_enable_order_notes_field', '__return_false', 9999 );
 * @param [array] $fields
 * @return [array]
 */
+function wpa_remove_order_notes( $fields ) {
+  unset($fields['order']['order_comments']);
+  return $fields;
+}
 add_filter( 'woocommerce_checkout_fields' , 'wpa_remove_order_notes' );
 
-function wpa_remove_order_notes( $fields ) {
-     unset($fields['order']['order_comments']);
-     return $fields;
+function wpa_support_link_001( array $links ) {
+  $support_link = 
+  '<a style="color: green" href="https://wpauthors.com/pay-per-task?utm_source=free-pluginutm_medium=plugin-link&utm_campaign=get-support-plugin-link" target="_blank">' . __('Get WordPress Support', 'wpa-woocommerce-remove-order-notes') . '</a>';
+    $links[] = $support_link;
+  return $links;
 }
+add_filter( 'plugin_action_links_' . plugin_basename(__FILE__), 'wpa_support_link_001' );
